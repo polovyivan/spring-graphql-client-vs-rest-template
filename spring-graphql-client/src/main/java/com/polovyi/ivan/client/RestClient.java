@@ -36,7 +36,7 @@ public class RestClient {
 
     public List<CustomerResponse> getCustomersWithFilters(String fullName, String phoneNumber, LocalDate createdAt) {
         log.info("[RestClient] Getting all customers...");
-        UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(URL);
+        UriComponentsBuilder uri = UriComponentsBuilder.fromUriString(URL + "-with-filters");
         Map<String, Object> map = new HashMap<>();
         map.computeIfAbsent("fullName", value -> fullName);
         map.computeIfAbsent("phoneNumber", value -> phoneNumber);
