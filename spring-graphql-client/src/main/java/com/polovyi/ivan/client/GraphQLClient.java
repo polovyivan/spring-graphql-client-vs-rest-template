@@ -90,28 +90,15 @@ public class GraphQLClient {
         return response.get("createCustomer", CustomerResponse.class).getId();
     }
 
+    // Using file instead of mutation string
     public void updateCustomer(String customerId, UpdateCustomerRequest updateCustomerRequest) {
         log.info("[GraphQLClient] Calling update customer mutation...");
         Map<String, Object> varMap = new HashMap<>();
         varMap.put("customerId", customerId);
         varMap.put("updateCustomerRequest", updateCustomerRequest);
 
-        String mutation = """
-                mutation ($updateCustomerRequest : UpdateCustomerRequest
-                          $customerId : String) {
-                          updateCustomer (
-                                           customerId : $customerId
-                                           updateCustomerRequest : $updateCustomerRequest)
-                                         {
-                        id
-                        fullName
-                        phoneNumber
-                        address
-                        createdAt
-                    }
-                }
-                """;
-        GraphQLRequest request = GraphQLRequest.builder().query(mutation).variables(varMap).build();
+        GraphQLRequest request = GraphQLRequest.builder().resource("graphq-web-client-resource/update-customer.graphql")
+                .variables(varMap).build();
         GraphQLResponse response = graphQLWebClient.post(request).block();
         response.get("updateCustomer", Void.class);
     }
