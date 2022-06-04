@@ -71,7 +71,7 @@ public class GraphQLClient {
     public String createCustomer(CreateCustomerRequest createCustomerRequest) {
         log.info("[GraphQLClient] Calling create customer mutation...");
         Map<String, Object> varMap = new HashMap<>();
-        varMap.put("$createCustomerRequest", createCustomerRequest);
+        varMap.put("createCustomerRequest", createCustomerRequest);
         String mutation = """
                 mutation ($createCustomerRequest : CreateCustomerRequest) {
                     createCustomer (createCustomerRequest : $createCustomerRequest)
@@ -82,7 +82,6 @@ public class GraphQLClient {
                         address
                         createdAt
                     }
-                }
                 }
                 """;
         GraphQLRequest request = GraphQLRequest.builder().query(mutation).variables(varMap).build();
